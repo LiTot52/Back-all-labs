@@ -11,17 +11,24 @@ Back-all-labs/
 └── lab1-back/
     ├── img/                    # Скриншоты работы эндпоинтов
     ├── labs1-node/
-    │   ├── node_modules/       # Библиотеки Node.js (создаётся автоматически)
-    │   ├── app.js              # Базовый пример сервера (Express)
-    │   ├── app_individual.js   # Код индивидуального задания (Express)
+    │   ├── node_modules/       # Библиотеки Node.js
+    │   ├── app.js              # Базовый пример сервера
+    │   ├── app_individual.js   # Код индивидуального задания
     │   ├── package.json        # Зависимости и скрипты Node.js
-    │   └── package-lock.json   # Фиксация версий (создаётся автоматически)
+    │   └── package-lock.json   # Фиксация версий 
     ├── labs2-py/
-    │   ├── app.py               # Базовый пример сервера (Flask)
-    │   ├── app_individual.py    # Код индивидуального задания (Flask)
-    │   └── requirements.txt     # Зависимости Python
-    └── Readme.md                # Отчёт по лабораторной работе
+    │   ├── app.py               # Базовый пример сервера
+    │   ├── app_individual.py    # Код индивидуального задания
+    │   └── requirements.txt
+    ├── Readme.md
+    │   
+    lab2-back/
+    │
+    Link.txt
+    │
+    Readme.md                
 ```
+# lab1-back - Лабораторная №1
 
 | Файл/папка | Назначение |
 |-------------|-------------|
@@ -33,3 +40,5 @@ Back-all-labs/
 | labs2-py/app.py | Базовый пример сервера на Flask |
 | labs2-py/app_individual.py | Индивидуальное задание (recipes/chefs) на Flask |
 | labs2-py/requirements.txt | Зависимости Python |
+
+# lab2-back - Лабораторная №2
