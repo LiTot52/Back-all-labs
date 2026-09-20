@@ -8,45 +8,60 @@
 
 ```
 Back-all-labs/
-└── lab1-back/
-    ├── img/                    # Скриншоты работы эндпоинтов
-    ├── labs1-node/
-    │   ├── node_modules/       # Библиотеки Node.js
-    │   ├── app.js              # Базовый пример сервера
-    │   ├── app_individual.js   # Код индивидуального задания
-    │   ├── package.json        # Зависимости и скрипты Node.js
-    │   └── package-lock.json   # Фиксация версий 
-    ├── labs1-py/
-    │   ├── app.py               # Базовый пример сервера
-    │   ├── app_individual.py    # Код индивидуального задания
-    │   └── requirements.txt
-    ├── Readme.md
-    │   
-    lab2-back/
-    ├── img/ 
-    ├── labs2-node/
-    │   ├── node_modules/       # Библиотеки Node.js
-    │   ├── app.js              # Базовый пример сервера
-    │   ├── app_individual.js   # Код индивидуального задания
-    │   ├── package.json        # Зависимости и скрипты Node.js
-    │   └── package-lock.json
-    ├── Readme.md
-    │
-    Link.txt
-    │
-    Readme.md                
+├── lab1-back/
+│   ├── img/                    # Скриншоты работы эндпоинтов
+│   ├── labs1-node/
+│   │   ├── node_modules/       # Библиотеки Node.js
+│   │   ├── app.js              # Базовый пример сервера
+│   │   ├── app_individual.js   # Код индивидуального задания
+│   │   ├── package.json        # Зависимости и скрипты Node.js
+│   │   └── package-lock.json   # Фиксация версий 
+│   ├── labs1-py/
+│   │   ├── app.py               # Базовый пример сервера
+│   │   ├── app_individual.py    # Код индивидуального задания
+│   │   └── requirements.txt
+│   └── Readme.md
+├── lab2-back/
+│   ├── screenshots/            # Скриншоты работы эндпоинтов
+│   ├── labs2-node/
+│   │   ├── access.log          # Файл для логирования    
+│   │   ├── node_modules/       # Библиотеки Node.js
+│   │   ├── app.js              # Базовый пример сервера
+│   │   ├── app_individual.js   # Код индивидуального задания
+│   │   └── package.json        # Зависимости и скрипты Node.js
+│   └── Readme.md
+├── Link.txt
+└── Readme.md                             
 ```
+
 # lab1-back - Лабораторная №1
 
-| Файл/папка | Назначение |
-|-------------|-------------|
-| Readme.md | Отчёт по лабораторной работе |
-| img/ | Скриншоты работы эндпоинтов |
-| labs1-node/app.js | Базовый пример сервера на Express |
+| Файл/папка                   | Назначение                                        |
+| ---------------------------- | ------------------------------------------------- |
+| Readme.md                    | Отчёт по лабораторной работе                      |
+| img/                         | Скриншоты работы эндпоинтов                       |
+| labs1-node/app.js            | Базовый пример сервера на Express                 |
 | labs1-node/app_individual.js | Индивидуальное задание (recipes/chefs) на Express |
-| labs1-node/package.json | Зависимости и скрипты Node.js |
-| labs2-py/app.py | Базовый пример сервера на Flask |
-| labs2-py/app_individual.py | Индивидуальное задание (recipes/chefs) на Flask |
-| labs2-py/requirements.txt | Зависимости Python |
+| labs1-node/package.json      | Зависимости и скрипты Node.js                     |
+| labs1-py/app.py              | Базовый пример сервера на Flask                   |
+| labs1-py/app_individual.py   | Индивидуальное задание (recipes/chefs) на Flask   |
+| labs1-py/requirements.txt    | Зависимости Python                                |
 
 # lab2-back - Лабораторная №2
+
+| Файл/папка                   | Назначение                                  |
+| ---------------------------- | ------------------------------------------- |
+| Readme.md                    | Отчёт по лабораторной работе                |
+| screenshots/                 | Скриншоты работы всех эндпоинтов            |
+| labs2-node/app.js            | Базовый пример CRUD-сервера на Express      |
+| labs2-node/app_individual.js | Индивидуальное задание (рецепты) на Express |
+| labs2-node/package.json      | Зависимости и скрипты Node.js               |
+| labs2-node/access.log        | Файл логов всех входящих запросов к серверу |
+| labs2-node/node_modules/     | Библиотеки Node.js                          |
+
+# Прочие файлы репозитория
+
+| Файл/папка | Назначение                                         |
+| ---------- | -------------------------------------------------- |
+| Link.txt   | Ссылка на репозиторий                              |
+| Readme.md  | Общее описание структуры репозитория (данный файл) |
