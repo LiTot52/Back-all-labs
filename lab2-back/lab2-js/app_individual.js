@@ -1,20 +1,15 @@
-// Что надо сделать для продвинутого уровня:
-// 1. PATCH - частичное обновление
-// 2. Массовое удаление
-// 3. Массовое создание
-// 4. Статистика
-// 5. Связанные эл - ы
-// 6. Логирование запросов в файл
-// 7. Глобальный обработчик ошибок
-
 const express = require('express');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
+//& Логирование в отдельный файл
 app.use((req, res, next) => {
-	console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+	const log = (`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+	console.log(log.trim());
+	fs.appendFile('access.log', log, () => { });
 	next();
 });
 
@@ -28,7 +23,6 @@ let items = [
 ];
 
 let nextID = 6;
-
 
 app.get('/items', (req, res) => {
 
@@ -59,6 +53,12 @@ app.get('/items', (req, res) => {
 	});
 });
 
+//& Статистика
+app.get('/items/stats', (req, res) => {
+	const avgTime = items.reduce((sum, i) => sum + parseInt(i.averageTime), 0) / items.length;
+	res.json({ count: items.length, averageTime: avgTime.toFixed(1) });
+});
+
 app.get('/items/:id', (req, res) => {
 
 	const id = parseInt(req.params.id);
@@ -69,6 +69,24 @@ app.get('/items/:id', (req, res) => {
 	}
 
 	res.json(item);
+});
+
+//& Связанные элементы
+app.get('/items/:id/related', (req, res) => {
+	const item = items.find(i => i.id === parseInt(req.params.id));
+	if (!item) {
+		return res.status(404).json({ error: 'Элемент не найден' });
+	}
+
+	const related = items.filter(i => i.complexity === complexity && i.id !== item.id);
+	res.json(related);
+});
+
+//& Массовое создание
+app.post('/items/bulk', (req, res) => {
+	const newItem = req.body.map(item => ({ id: nextID++, ...item }))
+	item.push(...newItem);
+	res.status(201).json(newItem);
 });
 
 app.post('/items', (req, res) => {
@@ -116,7 +134,7 @@ app.put('/items/:id', (req, res) => {
 	res.json(items[index]);
 });
 
-app.delete('/items/:id', (req, res) => {
+app.patch('/items/:id', (req, res) => {
 
 	const id = parseInt(req.params.id);
 	const index = items.findIndex(i => i.id === id);
@@ -124,9 +142,10 @@ app.delete('/items/:id', (req, res) => {
 	if (index === -1) {
 		return res.status(404).json({ error: 'Элемент не найден' });
 	}
-	//& 204 No Content
-	res.status(204).send();
 
+	items[index] = { ...items[index], ...req.body };
+
+	res.json(items[index]);
 });
 
 //& Массивное удаление
@@ -135,8 +154,28 @@ app.delete('/items', (req, res) => {
 	res.status(204).send();
 });
 
+app.delete('/items/:id', (req, res) => {
+
+	const id = parseInt(req.params.id);
+	const index = items.findIndex(i => i.id === id);
+
+	if (index === -1) {
+		return res.status(404).json({ error: 'Элемент не найден' });
+	}
+
+	items.splice(index, 1);
+	//& 204 No Content
+	res.status(204).send();
+
+});
+
 app.use((req, res) => {
 	res.status(404).json({ error: 'Маршрут не найден' });
+});
+//& Глобальный обработчик ошибок
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).json({ error: 'Внутренняя ошибка сервера' });
 });
 
 app.listen(port, () => {
