@@ -354,9 +354,9 @@ def get_user(user_id):
 
 ## Рекомендуемые источники
  
-1. **Node.js официальная документация** — https://nodejs.org/en/docs/
-2. **Express официальная документация** — https://expressjs.com/
-3. **Flask официальная документация** — https://flask.palletsprojects.com/
-4. **HTTP протокол (MDN)** — https://developer.mozilla.org/ru/docs/Web/HTTP
-5. **JSON (MDN)** — https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON
-6. **Nodemon документация** — https://nodemon.io/
+1. **Node.js официальная документация** - https://nodejs.org/en/docs/
+2. **Express официальная документация** - https://expressjs.com/
+3. **Flask официальная документация** - https://flask.palletsprojects.com/
+4. **HTTP протокол (MDN)** - https://developer.mozilla.org/ru/docs/Web/HTTP
+5. **JSON (MDN)** - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON
+6. **Nodemon документация** - https://nodemon.io/

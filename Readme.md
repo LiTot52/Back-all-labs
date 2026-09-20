@@ -16,13 +16,21 @@ Back-all-labs/
     │   ├── app_individual.js   # Код индивидуального задания
     │   ├── package.json        # Зависимости и скрипты Node.js
     │   └── package-lock.json   # Фиксация версий 
-    ├── labs2-py/
+    ├── labs1-py/
     │   ├── app.py               # Базовый пример сервера
     │   ├── app_individual.py    # Код индивидуального задания
     │   └── requirements.txt
     ├── Readme.md
     │   
     lab2-back/
+    ├── img/ 
+    ├── labs2-node/
+    │   ├── node_modules/       # Библиотеки Node.js
+    │   ├── app.js              # Базовый пример сервера
+    │   ├── app_individual.js   # Код индивидуального задания
+    │   ├── package.json        # Зависимости и скрипты Node.js
+    │   └── package-lock.json
+    ├── Readme.md
     │
     Link.txt
     │
