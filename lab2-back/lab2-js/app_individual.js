@@ -1,12 +1,3 @@
-
-// Что надо сделать в первую очередь:
-// Средний уровень:
-// 1. Поиск(?search =)
-// 2. Сортировка(?sort =)
-// 3. Пагинация(?page =, ?limit =)
-// 4. Валидация типов(400)
-// 5. 204 No Content при DELETE
-
 // Что надо сделать для продвинутого уровня:
 // 1. PATCH - частичное обновление
 // 2. Массовое удаление
@@ -38,7 +29,30 @@ let items = [
 
 let nextID = 6;
 
+
 app.get('/items', (req, res) => {
+
+	//~ Поиск
+	let result = items;
+	if (req.query.search) {
+		const search = req.query.search.toLocaleLowerCase();
+		result = result.filter(i => i.name.toLocaleLowerCase().includes(search));
+	}
+
+	//! Сортировка
+	if (req.query.sort) {
+		const order = req.query.order === 'desc' ? -1 : 1;
+		result = [...result].sort((a, b) => a[req.query.sort] > b[req.query.sort] ? order : -order);
+	}
+
+	//? Палигнация
+	if (req.query.page || req.query.limit) {
+		const page = parseInt(req.query.page) || 1;
+		const limit = parseInt(req.query.limit) || 10;
+		const start = (page - 1) * limit;
+		result = result.slice(start, start + limit);
+	}
+
 	res.json({
 		count: items.length,
 		items: items
@@ -58,12 +72,18 @@ app.get('/items/:id', (req, res) => {
 });
 
 app.post('/items', (req, res) => {
+
 	const { name, averageTime, complexity } = req.body;
 
 	if (!name || !averageTime || !complexity) {
 		return res.status(400).json({
 			error: 'Поля name, averageTime и complexity обязательны'
 		});
+	}
+
+	//& Валидация типов
+	if (typeof name !== 'string' || typeof averageTime !== 'string' || typeof complexity !== 'string') {
+		return res.status(400).json({ error: 'Поля должны быть строками' });
 	}
 
 	const newItem = {
@@ -104,14 +124,15 @@ app.delete('/items/:id', (req, res) => {
 	if (index === -1) {
 		return res.status(404).json({ error: 'Элемент не найден' });
 	}
+	//& 204 No Content
+	res.status(204).send();
 
-	const deletedItem = items.splice(index, 1)[0];
+});
 
-	res.json({
-		message: 'Элемент удалён',
-		deleted: deletedItem
-	})
-
+//& Массивное удаление
+app.delete('/items', (req, res) => {
+	items = [];
+	res.status(204).send();
 });
 
 app.use((req, res) => {
