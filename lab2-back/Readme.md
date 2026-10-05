@@ -168,34 +168,55 @@ app.listen(port, () => {
 
 ### Скриншоты работы всех эндпоинтов
 
-
-**1. `GET /items` - получение списка всех элементов.**
+<details>
+<summary>1. <code>GET /items</code> - получение списка всех элементов.</summary>
 
 ![GET /items - список всех элементов](screenshots/basic/01-get-all.png)
 
-**2. `GET /items/2` - получение одного существующего элемента.**
+</details>
+
+<details>
+<summary>2. <code>GET /items/2</code> - получение одного существующего элемента.</summary>
 
 ![GET /items/2 - элемент по id](screenshots/basic/02-get-by-id.png)
 
-**3. `GET /items/999` - запрос несуществующего элемента (проверка 404).** 
+</details>
+
+<details>
+<summary>3. <code>GET /items/999</code> - запрос несуществующего элемента (проверка 404).</summary>
 
 ![GET /items/999 - 404](screenshots/basic/03-get-404.png)
 
-**4. `POST /items` с корректным телом - создание нового элемента (проверка 201).**
+</details>
+
+<details>
+<summary>4. <code>POST /items</code> с корректным телом - создание нового элемента (проверка 201).</summary>
 
 ![POST /items - создание, 201](screenshots/basic/04-post-create.png)
 
-**5. `POST /items` без обязательного поля `price` - проверка обработки 400.**
+</details>
+
+<details>
+<summary>5. <code>POST /items</code> без обязательного поля <code>price</code> - проверка обработки 400.</summary>
 
 ![POST /items - 400, нет поля price](screenshots/basic/05-post-400.png)
 
-**6. `PUT /items/1` - полное обновление элемента (проверка 200).**
+</details>
+
+<details>
+<summary>6. <code>PUT /items/1</code> - полное обновление элемента (проверка 200).</summary>
 
 ![PUT /items/1 - обновление](screenshots/basic/06-put-update.png)
 
-**7. `DELETE /items/3` - удаление элемента (проверка 200 и тела с удалённым элементом).**
+</details>
+
+<details>
+<summary>7. <code>DELETE /items/3</code> - удаление элемента (проверка 200 и тела с удалённым элементом).</summary>
 
 ![DELETE /items/3 - удаление](screenshots/basic/07-delete-item.png)
+
+</details>
+
 
 ## Выполнение индивидуального задания
 **Вариант 11, Продвинутый уровень.**
@@ -390,80 +411,135 @@ app.listen(port, () => {
 
 **Базовый функционал:**
 
-**1. `GET /items` - список всех рецептов.**
+<details>
+<summary>1. <code>GET /items</code> - список всех рецептов.</summary>
+
 ![GET /items - список рецептов](screenshots/advanced/01-get-all.png)
 
+</details>
 
-**2. `GET /items/2` - один рецепт по id.**
+<details>
+<summary>2. <code>GET /items/2</code> - один рецепт по id.</summary>
 
 ![GET /items/2 - рецепт по id](screenshots/advanced/02-get-by-id.png)
 
-**3. `GET /items/999` - 404 при отсутствии элемента.**
+</details>
+
+<details>
+<summary>3. <code>GET /items/999</code> - 404 при отсутствии элемента.</summary>
 
 ![GET /items/999 - 404](screenshots/advanced/03-get-404.png)
 
-**4. `POST /items` с корректным телом — создание (201)**.
+</details>
+
+<details>
+<summary>4. <code>POST /items</code> с корректным телом - создание (201).</summary>
 
 ![POST /items - создание, 201](screenshots/advanced/04-post-create.png)
 
-**5. `POST /items` без поля `complexity` и `avarageTime` - 400 (не хватает обязательного поля).**
+</details>
+
+<details>
+<summary>5. <code>POST /items</code> без поля <code>complexity</code> и <code>avarageTime</code> - 400 (не хватает обязательного поля).</summary>
 
 ![POST /items - 400, нет поля](screenshots/advanced/05-post-400-missing.png)
 
-**6. `POST /items` с `name` числом вместо строки - 400 (ошибка валидации типа).**
+</details>
+
+<details>
+<summary>6. <code>POST /items</code> с <code>name</code> числом вместо строки - 400 (ошибка валидации типа).</summary>
 
 ![POST /items - 400, неверный тип](screenshots/advanced/06-post-400-type.png)
 
-**7. `PUT /items/1` - полное обновление.**
+</details>
+
+<details>
+<summary>7. <code>PUT /items/1</code> - полное обновление.</summary>
 
 ![PUT /items/1 - обновление](screenshots/advanced/07-put-update.png)
 
-**8. `DELETE /items/2` - удаление, статус 204, тело ответа пустое.**
+</details>
+
+<details>
+<summary>8. <code>DELETE /items/2</code> - удаление, статус 204, тело ответа пустое.</summary>
 
 ![DELETE /items/2 - 204](screenshots/advanced/08-delete-item.png)
 
-**9. `DELETE /items/999` - 404 при удалении несуществующего элемента.**
+</details>
+
+<details>
+<summary>9. <code>DELETE /items/999</code> - 404 при удалении несуществующего элемента.</summary>
 
 ![DELETE /items/999 - 404](screenshots/advanced/09-delete-404.png)
 
+</details>
+
 **Поиск, сортировка, пагинация:**
 
-**10. `GET /items?search=паста` - поиск по названию.**
+<details>
+<summary>10. <code>GET /items?search=паста</code> - поиск по названию.</summary>
 
 ![GET /items?search - поиск](screenshots/advanced/10-search.png)
 
-**11. `GET /items?sort=name&order=asc` - сортировка по имени.**
+</details>
+
+<details>
+<summary>11. <code>GET /items?sort=name&order=asc</code> - сортировка по имени.</summary>
 
 ![GET /items?sort - сортировка](screenshots/advanced/11-sort.png)
 
-**12.  `GET /items?page=1&limit=2` - пагинация.**
+</details>
+
+<details>
+<summary>12. <code>GET /items?page=1&limit=2</code> - пагинация.</summary>
 
 ![GET /items?page&limit - пагинация](screenshots/advanced/12-pagination.png)
 
+</details>
 
 **Продвинутый уровень:**
 
-**13.  `PATCH /items/2` с частичным телом (например, только `complexity`) - проверить, что остальные поля не изменились.**
+<details>
+<summary>13. <code>PATCH /items/2</code> с частичным телом (например, только <code>complexity</code>) - проверить, что остальные поля не изменились.</summary>
 
 ![PATCH /items/2 - частичное обновление](screenshots/advanced/13-patch.png)
 
-**14.  `DELETE /items` - массовое удаление, статус 204, после этого `GET /items` должен вернуть пустой массив.**
+</details>
+
+<details>
+<summary>14. <code>DELETE /items</code> - массовое удаление, статус 204, после этого <code>GET /items</code> должен вернуть пустой массив.</summary>
 
 ![DELETE /items - массовое удаление](screenshots/advanced/14-mass-delete.png)
 
-**15.  `POST /items/bulk` с массивом из 2-3 объектов - проверить статус 201 и присвоенные id.**
+</details>
+
+<details>
+<summary>15. <code>POST /items/bulk</code> с массивом из 2-3 объектов - проверить статус 201 и присвоенные id.</summary>
 
 ![POST /items/bulk - массовое создание](screenshots/advanced/15-bulk-create.png)
 
-**16.  `GET /items/stats` - статистика (количество элементов, среднее время приготовления).**
+</details>
+
+<details>
+<summary>16. <code>GET /items/stats</code> - статистика (количество элементов, среднее время приготовления).</summary>
 
 ![GET /items/stats - статистика](screenshots/advanced/16-stats.png)
 
-**17.  `GET /items/1/related` - элементы с такой же сложностью (`complexity`), что и у элемента с id=1.**
+</details>
+
+<details>
+<summary>17. <code>GET /items/1/related</code> - элементы с такой же сложностью (<code>complexity</code>), что и у элемента с id=1.</summary>
+
 ![GET /items/1/related - связанные элементы](screenshots/advanced/17-related.png)
 
-**18.  Скриншот файла `access.log` после нескольких запросов - подтверждение логирования в файл.**
+</details>
+
+<details>
+<summary>18. Скриншот файла <code>access.log</code> после нескольких запросов - подтверждение логирования в файл.</summary>
+
 ![access.log - логирование запросов](screenshots/advanced/18-access-log.png)
+
+</details>
 
 
 

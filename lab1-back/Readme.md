@@ -94,14 +94,55 @@ npm run dev
 ```
 ### Скриншоты работы всех эндпоинтов
 
+<details>
+<summary>Главная страница</summary>
 
-[Главная страница](img/image-7.png)
-[Страница статуса](img/image-8.png)
-[Страница информации](img/image-9.png)
-[Страница пользователя №5](img/image-10.png)
-[Страница пользователя №123](img/image-11.png)
-[Страница пользователя Ivan](img/image-12.png)
-[Несуществующая страница](img/image-13.png)
+![Главная страница](img/image-7.png)
+
+</details>
+
+<details>
+<summary>Страница статуса</summary>
+
+![Страница статуса](img/image-8.png)
+
+</details>
+
+<details>
+<summary>Страница информации</summary>
+
+![Страница информации](img/image-9.png)
+
+</details>
+
+<details>
+<summary>Страница пользователя №5</summary>
+
+![Страница пользователя №5](img/image-10.png)
+
+</details>
+
+<details>
+<summary>Страница пользователя №123</summary>
+
+![Страница пользователя №123](img/image-11.png)
+
+</details>
+
+<details>
+<summary>Страница пользователя Ivan</summary>
+
+![Страница пользователя Ivan](img/image-12.png)
+
+</details>
+
+<details>
+<summary>Несуществующая страница</summary>
+
+![Несуществующая страница](img/image-13.png)
+
+</details>
+
 
 ### Python + Flask
 
@@ -152,17 +193,57 @@ pip install -r requirements.txt
 python app.py
 ```
 
+
 ### Скриншоты работы всех эндпоинтов
 
-[Главная страница](img/image.png)
-[Страница статуса](img/image-1.png)
-[Страница информации](img/image-2.png)
-[Страница пользователя №5](img/image-3.png)
-[Страница пользователя №123](img/image-4.png)
-[Страница пользователя Ivan](img/image-5.png)
-[Несуществующая страница](img/image-6.png)
+<details>
+<summary>Главная страница</summary>
 
+![Главная страница](img/image.png)
 
+</details>
+
+<details>
+<summary>Страница статуса</summary>
+
+![Страница статуса](img/image-1.png)
+
+</details>
+
+<details>
+<summary>Страница информации</summary>
+
+![Страница информации](img/image-2.png)
+
+</details>
+
+<details>
+<summary>Страница пользователя №5</summary>
+
+![Страница пользователя №5](img/image-3.png)
+
+</details>
+
+<details>
+<summary>Страница пользователя №123</summary>
+
+![Страница пользователя №123](img/image-4.png)
+
+</details>
+
+<details>
+<summary>Страница пользователя Ivan</summary>
+
+![Страница пользователя Ivan](img/image-5.png)
+
+</details>
+
+<details>
+<summary>Несуществующая страница</summary>
+
+![Несуществующая страница](img/image-6.png)
+
+</details>
 
 
 
@@ -216,11 +297,40 @@ app.listen(port, () => {
 
 ### Скриншоты работы всех эндпоинтов
 
-[Главная страница](img/image14.png)
-[Страница статуса](img/image15.png)
-[Страница с рецептами ](img/image16.png)
-[Страница с шефами ](img/image17.png)
-[Несуществующая страница](img/image18.png)
+<details>
+<summary>Главная страница</summary>
+
+![Главная страница](img/image14.png)
+
+</details>
+
+<details>
+<summary>Страница статуса</summary>
+
+![Страница статуса](img/image15.png)
+
+</details>
+
+<details>
+<summary>Страница с рецептами</summary>
+
+![Страница с рецептами](img/image16.png)
+
+</details>
+
+<details>
+<summary>Страница с шефами</summary>
+
+![Страница с шефами](img/image17.png)
+
+</details>
+
+<details>
+<summary>Несуществующая страница</summary>
+
+![Несуществующая страница](img/image18.png)
+
+</details>
 
 
 
@@ -287,11 +397,40 @@ if __name__ == '__main__':
 ```
 ### Скриншоты работы всех эндпоинтов
 
-[Главная страница](img/image19.png)
-[Страница статуса](img/image20.png)
-[Страница с рецептами ](img/image21.png)
-[Страница с шефами ](img/image22.png)
-[Несуществующая страница](img/image23.png)
+<details>
+<summary>Главная страница</summary>
+
+![Главная страница](img/image19.png)
+
+</details>
+
+<details>
+<summary>Страница статуса</summary>
+
+![Страница статуса](img/image20.png)
+
+</details>
+
+<details>
+<summary>Страница с рецептами</summary>
+
+![Страница с рецептами](img/image21.png)
+
+</details>
+
+<details>
+<summary>Страница с шефами</summary>
+
+![Страница с шефами](img/image22.png)
+
+</details>
+
+<details>
+<summary>Несуществующая страница</summary>
+
+![Несуществующая страница](img/image23.png)
+
+</details>
 
 
 ## Ответы на контрольные вопросы
