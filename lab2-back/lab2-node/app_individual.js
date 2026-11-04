@@ -13,8 +13,8 @@ app.use((req, res, next) => {
 	next();
 });
 
+// База данных
 let items = [
-
 	{ id: 1, name: 'Паста Карбонара', averageTime: '30 мин', complexity: 'Средняя' },
 	{ id: 2, name: 'Борщ', averageTime: '2 часа', complexity: 'Сложная' },
 	{ id: 3, name: 'Омлет с сыром', averageTime: '10 мин', complexity: 'Легкая' },
@@ -36,7 +36,7 @@ app.get('/items', (req, res) => {
 	//! Сортировка
 	if (req.query.sort) {
 		const order = req.query.order === 'desc' ? -1 : 1;
-		result = [...result].sort((a, b) => a[req.query.sort] > b[req.query.sort] ? order : -order);
+		result = [...result].sort((a, b) => a[req.query.sort] > b[req.query.sort] ? order : -order); // Делаем копию 
 	}
 
 	//? Палигнация
@@ -54,6 +54,7 @@ app.get('/items', (req, res) => {
 });
 
 //& Статистика
+
 app.get('/items/stats', (req, res) => {
 	const avgTime = items.reduce((sum, i) => sum + parseInt(i.averageTime), 0) / items.length;
 	res.json({ count: items.length, averageTime: avgTime.toFixed(1) });
@@ -77,7 +78,7 @@ app.get('/items/:id/related', (req, res) => {
 	if (!item) {
 		return res.status(404).json({ error: 'Элемент не найден' });
 	}
-
+	// проверка на сложность
 	const related = items.filter(i => i.complexity === item.complexity && i.id !== item.id);
 	res.json(related);
 });
@@ -89,6 +90,7 @@ app.post('/items/bulk', (req, res) => {
 	res.status(201).json(newItems);
 });
 
+//& Создание одного элемента
 app.post('/items', (req, res) => {
 
 	const { name, averageTime, complexity } = req.body;
@@ -115,6 +117,7 @@ app.post('/items', (req, res) => {
 	res.status(201).json(newItem);
 });
 
+//& Обновление
 app.put('/items/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 	const index = items.findIndex(i => i.id === id);
@@ -172,6 +175,7 @@ app.delete('/items/:id', (req, res) => {
 app.use((req, res) => {
 	res.status(404).json({ error: 'Маршрут не найден' });
 });
+
 //& Глобальный обработчик ошибок
 app.use((err, req, res, next) => {
 	console.error(err.stack);

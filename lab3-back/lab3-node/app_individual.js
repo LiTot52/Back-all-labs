@@ -1,0 +1,129 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+
+
+app.use(express.json());
+
+app.use((req, res, next) => {
+	console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+	next();
+})
+
+
+let recipes = [
+	{ id: 1, title: "Борщ", time: 90, difficulty: "medium" },
+	{ id: 2, title: "Омлет", time: 10, difficulty: "easy" },
+	{ id: 3, title: "Блины", time: 40, difficulty: "easy" },
+	{ id: 4, title: "Плов", time: 120, difficulty: "hard" },
+	{ id: 5, title: "Салат Цезарь", time: 25, difficulty: "easy" },
+	{ id: 6, title: "Лазанья", time: 100, difficulty: "hard" },
+	{ id: 7, title: "Сырники", time: 30, difficulty: "medium" }
+];
+
+
+let steps = [
+	{ id: 1, recipeId: 1, order: 1, text: "Сварить бульон из мяса" },
+	{ id: 2, recipeId: 1, order: 2, text: "Обжарить лук, морковь и свёклу" },
+	{ id: 3, recipeId: 1, order: 3, text: "Добавить овощи и капусту в бульон, варить 30 минут" },
+	{ id: 4, recipeId: 2, order: 1, text: "Взбить яйца с молоком и солью" },
+	{ id: 5, recipeId: 2, order: 2, text: "Вылить на разогретую сковороду и жарить под крышкой" },
+	{ id: 6, recipeId: 3, order: 1, text: "Смешать яйца, молоко, муку и сахар" },
+	{ id: 7, recipeId: 3, order: 2, text: "Жарить на сковороде с двух сторон" },
+	{ id: 8, recipeId: 4, order: 1, text: "Обжарить мясо с луком и морковью" },
+	{ id: 9, recipeId: 4, order: 2, text: "Добавить рис и воду, тушить до готовности" },
+	{ id: 10, recipeId: 5, order: 1, text: "Нарезать курицу и листья салата" },
+	{ id: 11, recipeId: 5, order: 2, text: "Заправить соусом и посыпать сыром" },
+	{ id: 12, recipeId: 6, order: 1, text: "Приготовить мясной соус и бешамель" },
+	{ id: 13, recipeId: 6, order: 2, text: "Собрать слои и запекать 40 минут" },
+	{ id: 14, recipeId: 7, order: 1, text: "Смешать творог, яйцо, сахар и муку" },
+	{ id: 15, recipeId: 7, order: 2, text: "Сформировать сырники и обжарить" }
+];
+
+
+app.get('/recipes', (req, res) => {
+	res.json({
+		count: recipes.length, recipes
+	});
+});
+
+app.get('/recipes/:id', (req, res) => {
+	const id = parseInt(req.params.id);
+
+	if (isNaN(id)) {
+		return res.status(400).json({
+			error: 'ID должен быть числом'
+
+		});
+	}
+
+	const recipe = recipes.find(r => r.id === id);
+	if (!recipe) {
+		return res.status(404).json({
+			error: 'Рецепт не найден'
+		});
+	}
+
+	res.json(recipe);
+});
+
+
+
+app.get('/recipes/:id/steps', (req, res) => {
+
+	const id = parseInt(req.params.id);
+	if (isNaN(id)) {
+		return res.status(400).json({
+			error: 'ID должен быть числом'
+		});
+	}
+
+	const recipe = recipes.find(r => r.id === id); КОЧ
+	if (!recipe) {
+		return res.status(404).json({
+			error: 'Рецепт не найден'
+		});
+	}
+
+	const recipeSteps = steps.filter(s => s.recipeId === id)
+
+	res.json({
+		recipe: recipe.title,
+		steps: recipeSteps,
+		count: recipeSteps.length
+
+	});
+
+});
+
+
+app.get('/difficulties/:diff/recipes', (req, res) => {
+
+	const difficult = req.params.diff;
+
+	const filtered = recipes.filter(r => r.difficulty.toLowerCase() === difficult.toLowerCase());
+
+	res.json({
+		difficult,
+		count: filtered.length,
+		recipes: filtered
+
+	});
+
+});
+
+app.get('/recipes/:id/steps/:order', (req, res) => {
+	const id = parseInt(req.params.id);
+	const order = parseInt(req.params.order);
+}
+
+
+
+
+app.use((req, res) => {
+	res.status(404).json({ error: 'Маршрут не найден' });
+});
+
+app.listen(port, () => {
+	console.log(`Сервер запущен на http://localhost:${port}`);
+});
