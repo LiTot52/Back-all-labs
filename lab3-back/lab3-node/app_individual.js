@@ -42,10 +42,85 @@ let steps = [
 
 
 app.get('/recipes', (req, res) => {
+
+	let result = [...recipes];
+
+	const search = req.query.search;
+	const filter = req.query.filter;
+	const sort = req.query.sort;
+	const order = req.query.order || 'asc';
+	const allowedSortFields = ['id', 'title', 'time'];
+	const page = parseInt(req.query.page) || 1;
+	const limit = parseInt(req.query.limit) || 10;
+
+	if (search) {
+		result = result.filter(r => r.title.toLowerCase().includes(search.toLowerCase()));
+	}
+
+	if (filter) {
+		const [field, value] = filter.split(':');
+		const allowedFilterFields = ['difficulty', 'time'];
+
+		if (!allowedFilterFields.includes(field)) {
+			return res.status(400).json({
+				error: `Фильтровать можно только по: ${allowedFilterFields.join(', ')}`
+			});
+		}
+
+		result = result.filter(r => String(r[field]) === value);
+	}
+
+	if (sort) {
+		if (!allowedSortFields.includes(sort)) {
+			return res.status(400).json({
+				error: `Сортировать можно только по: ${allowedSortFields.join(', ')}`
+			});
+		}
+
+		if (order !== 'asc' && order !== 'desc') {
+			return res.status(400).json({
+				error: 'order должен быть asc или desc'
+			});
+		}
+
+		result.sort((a, b) => {
+			if (a[sort] < b[sort]) {
+				return -1;
+			}
+			if (a[sort] > b[sort]) {
+				return 1;
+			}
+			return 0;
+		});
+
+		if (order === 'desc') {
+			result.reverse();
+		}
+	}
+
+	if (page < 1) {
+		return res.status(400).json({ error: 'page должен быть >= 1' });
+	}
+
+	if (limit < 1 || limit > 100) {
+		return res.status(400).json({ error: 'limit должен быть от 1 до 100' });
+	}
+
+	const totalPages = Math.ceil(result.length / limit);
+	const start = (page - 1) * limit;
+	const items = result.slice(start, start + limit);
+
 	res.json({
-		count: recipes.length, recipes
+		count: result.length,
+		page,
+		limit,
+		totalPages,
+		items
 	});
+
 });
+
+
 
 app.get('/recipes/:id', (req, res) => {
 	const id = parseInt(req.params.id);
@@ -78,7 +153,7 @@ app.get('/recipes/:id/steps', (req, res) => {
 		});
 	}
 
-	const recipe = recipes.find(r => r.id === id); КОЧ
+	const recipe = recipes.find(r => r.id === id);
 	if (!recipe) {
 		return res.status(404).json({
 			error: 'Рецепт не найден'
@@ -86,7 +161,6 @@ app.get('/recipes/:id/steps', (req, res) => {
 	}
 
 	const recipeSteps = steps.filter(s => s.recipeId === id)
-
 	res.json({
 		recipe: recipe.title,
 		steps: recipeSteps,
@@ -98,11 +172,8 @@ app.get('/recipes/:id/steps', (req, res) => {
 
 
 app.get('/difficulties/:diff/recipes', (req, res) => {
-
 	const difficult = req.params.diff;
-
 	const filtered = recipes.filter(r => r.difficulty.toLowerCase() === difficult.toLowerCase());
-
 	res.json({
 		difficult,
 		count: filtered.length,
@@ -115,7 +186,67 @@ app.get('/difficulties/:diff/recipes', (req, res) => {
 app.get('/recipes/:id/steps/:order', (req, res) => {
 	const id = parseInt(req.params.id);
 	const order = parseInt(req.params.order);
-}
+
+	if (isNaN(id) || isNaN(order)) {
+		return res.status(400).json({
+			error: 'ID и Order должны быть числами'
+		});
+
+	}
+
+	const step = steps.find(s => s.recipeId === id && s.order === order);
+	if (!step) {
+		return res.status(404).json({
+			error: 'Этап не найден'
+		});
+	}
+
+	res.json(step);
+});
+
+app.get('/recipes/:id/steps/:order/next', (req, res) => {
+	const id = parseInt(req.params.id);
+	const order = parseInt(req.params.order);
+
+	if (isNaN(order) || isNaN(id)) {
+		return res.status(400).json({
+			error: 'ID и Order должны быть числами'
+		});
+	}
+
+	const currentStep = steps.find(s => s.recipeId === id && s.order === order);
+	if (!currentStep) {
+		return res.status(404).json({
+			error: "Текущий этап не найден"
+		});
+	}
+
+	const nextstep = steps.find(s => s.recipeId === id && s.order === order + 1);
+	if (!nextstep) {
+		return res.status(404).json({
+			error: "Следующий этап не найден"
+		});
+	}
+
+	res.json(nextstep);
+});
+
+
+
+
+
+
+
+// Логирование с IP и временем выполнения(расширим то, что уже есть).
+// Эндпоинт статистики / recipes / stats.
+// 	Маршрут / difficulties /: diff / recipes /: id(рецепт внутри категории).
+// Валидация сложности(easy, medium, hard).
+// Глобальный обработчик ошибок 500.
+
+
+
+
+
 
 
 

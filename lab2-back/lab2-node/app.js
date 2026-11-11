@@ -28,7 +28,7 @@ app.get('/items', (req, res) => {
 
 
 app.get('/items/:id', (req, res) => {
-	const id = parseInt(req.params.id);
+	const id = parseInt(req.params.id); d
 	const item = items.find(i => i.id === id);
 
 	if (!item) {
