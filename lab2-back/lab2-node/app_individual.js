@@ -36,7 +36,7 @@ app.get('/items', (req, res) => {
 	//! Сортировка
 	if (req.query.sort) {
 		const order = req.query.order === 'desc' ? -1 : 1;
-		result = [...result].sort((a, b) => a[req.query.sort] > b[req.query.sort] ? order : -order); // Делаем копию 
+		result = [...result].sort((a, b) => a[req.query.sort] > b[req.query.sort] ? order : -order);
 	}
 
 	//? Палигнация
@@ -78,7 +78,7 @@ app.get('/items/:id/related', (req, res) => {
 	if (!item) {
 		return res.status(404).json({ error: 'Элемент не найден' });
 	}
-	// проверка на сложность
+
 	const related = items.filter(i => i.complexity === item.complexity && i.id !== item.id);
 	res.json(related);
 });
@@ -151,7 +151,7 @@ app.patch('/items/:id', (req, res) => {
 	res.json(items[index]);
 });
 
-//& Массивное удаление
+//& Массовое удаление
 app.delete('/items', (req, res) => {
 	items = [];
 	res.status(204).send();
