@@ -6,9 +6,17 @@ const port = 3000;
 app.use(express.json());
 
 app.use((req, res, next) => {
-	console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+	const startTime = Date.now();
+
+	res.on('finish', () => {
+		const duration = Date.now() - startTime;
+		console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${res.statusCode} ${duration}ms IP: ${req.ip}`);
+
+	});
+
 	next();
 })
+
 
 
 let recipes = [
@@ -53,10 +61,12 @@ app.get('/recipes', (req, res) => {
 	const page = parseInt(req.query.page) || 1;
 	const limit = parseInt(req.query.limit) || 10;
 
+	//& Поиск
 	if (search) {
 		result = result.filter(r => r.title.toLowerCase().includes(search.toLowerCase()));
 	}
 
+	//& Фильтрация
 	if (filter) {
 		const [field, value] = filter.split(':');
 		const allowedFilterFields = ['difficulty', 'time'];
@@ -69,7 +79,7 @@ app.get('/recipes', (req, res) => {
 
 		result = result.filter(r => String(r[field]) === value);
 	}
-
+	//& Сортировка
 	if (sort) {
 		if (!allowedSortFields.includes(sort)) {
 			return res.status(400).json({
@@ -98,6 +108,7 @@ app.get('/recipes', (req, res) => {
 		}
 	}
 
+	//& Палигнация 
 	if (page < 1) {
 		return res.status(400).json({ error: 'page должен быть >= 1' });
 	}
@@ -120,6 +131,19 @@ app.get('/recipes', (req, res) => {
 
 });
 
+
+//& Статистика
+app.get('/recipes/stats', (req, res) => {
+	const times = recipes.map(r => r.time);
+	const total = times.reduce((sum, t) => sum + t, 0);
+
+	res.json({
+		count: recipes.length,
+		averageTime: Math.round(total / recipes.length),
+		minTime: Math.min(...times),
+		maxTime: Math.max(...times)
+	});
+})
 
 
 app.get('/recipes/:id', (req, res) => {
@@ -204,6 +228,7 @@ app.get('/recipes/:id/steps/:order', (req, res) => {
 	res.json(step);
 });
 
+
 app.get('/recipes/:id/steps/:order/next', (req, res) => {
 	const id = parseInt(req.params.id);
 	const order = parseInt(req.params.order);
@@ -232,28 +257,68 @@ app.get('/recipes/:id/steps/:order/next', (req, res) => {
 });
 
 
+//& Эндпоинт статистики / recipes / stats.
+app.get('recipes/stats', (req, res) => {
+
+	avgTime = recipes.reduce((sum, r) => sum + parseInt(r.avgTime), 0) / recipes.length;
+	res.json({ count: recipes.length, averageTime: avgTime.toFixed(1) });
+});
+
+
+//& Валидация сложности 
+
+app.get('/difficulties/abc/recipes', (req, res) => {
+	const allowedDifficulties = ['easy', 'medium', 'hard'];
+
+	if (!allowedDifficulties.includes(req.params.difficulty.toLowerCase())) {
+		return res.status(400).json({
+			error: `Сложность должна быть одной из: ${allowedDifficulties.join(', ')}`
+		});
+	}
+});
 
 
 
+// Маршрут / difficulties /: diff / recipes /: id(рецепт внутри категории).
+app.get('/difficulties/:diff/recipes/:id', (req, res) => {
+	const allowedDifficulties = ['easy', 'medium', 'hard'];
+	const diff = req.params.diff.toLowerCase();
+	const id = parseInt(req.params.id);
 
+	if (!allowedDifficulties.includes(diff)) {
+		return res.status(400).json({
+			error: `Сложность должна быть одной из: ${allowedDifficulties.join(', ')}`
+		});
+	}
 
-// Логирование с IP и временем выполнения(расширим то, что уже есть).
-// Эндпоинт статистики / recipes / stats.
-// 	Маршрут / difficulties /: diff / recipes /: id(рецепт внутри категории).
-// Валидация сложности(easy, medium, hard).
-// Глобальный обработчик ошибок 500.
+	if (isNaN(id)) {
+		return res.status(400).json({
+			error: 'Id должен быть числом'
+		});
+	}
 
+	const recipe = recipes.find(r => r.id === id && r.difficulty.toLowerCase() === diff);
+	if (!recipe) {
+		return res.status(404).json({
+			error: `Рецепт с id=${id} в категории "${diff}" не найден`
+		});
+	}
 
+	res.json(recipe);
 
-
-
-
+});
 
 
 
 app.use((req, res) => {
 	res.status(404).json({ error: 'Маршрут не найден' });
 });
+
+//& Глобальный обработчик ошибок 500.
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).json({ error: 'Внутренняя ошибка сервера' })
+})
 
 app.listen(port, () => {
 	console.log(`Сервер запущен на http://localhost:${port}`);
