@@ -16,9 +16,8 @@
 	- [Теоретическое обоснование](#теоретическое-обоснование)
 	- [Выполнение практического примера](#выполнение-практического-примера)
 		- [Команды для запуска](#команды-для-запуска)
-		- [Скриншоты работы всех эндпоинтов](#скриншоты-работы-всех-эндпоинтов)
 	- [Выполнение индивидуального задания](#выполнение-индивидуального-задания)
-		- [Скриншоты работы всех эндпоинтов](#скриншоты-работы-всех-эндпоинтов-1)
+		- [Скриншоты работы всех эндпоинтов](#скриншоты-работы-всех-эндпоинтов)
 	- [Ответы на контрольные вопросы](#ответы-на-контрольные-вопросы)
 	- [Вывод:](#вывод)
 	- [Рекомендуемые источники](#рекомендуемые-источники)
@@ -80,7 +79,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-// ============ ДАННЫЕ ============ 
+// ДАННЫЕ  
 let cities = [
 	{
 		id: 1, name: 'Москва', population: 13000000, country: 'Россия', area:
@@ -103,15 +102,14 @@ let cities = [
 	}
 ];
 
-// ============ БАЗОВЫЙ УРОВЕНЬ ============ 
-// GET /cities -  все города 
+
 app.get('/cities', (req, res) => {
 	res.json({
 		count: cities.length, cities
 	});
 });
 
-// GET /cities/:id -  один город 
+
 app.get('/cities/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 
@@ -131,7 +129,7 @@ app.get('/cities/:id', (req, res) => {
 	res.json(city);
 });
 
-// GET /cities/:id/area -  площадь города 
+
 app.get('/cities/:id/area', (req, res) => {
 	const id = parseInt(req.params.id);
 	const city = cities.find(c => c.id === id);
@@ -149,7 +147,6 @@ app.get('/cities/:id/area', (req, res) => {
 	});
 });
 
-// GET /countries/:country/cities -  города страны 
 app.get('/countries/:country/cities', (req, res) => {
 	const country = req.params.country;
 	const filtered = cities.filter(c =>
@@ -163,9 +160,7 @@ app.get('/countries/:country/cities', (req, res) => {
 	});
 });
 
-// ============ СРЕДНИЙ УРОВЕНЬ ============ 
-9
-// GET /cities?search=&sort=&order=&page=&limit= 
+
 app.get('/cities', (req, res) => {
 	let result = [...cities
 	];
@@ -244,8 +239,7 @@ ${allowedSortFields.join(', ')
 	});
 });
 
-// ============ ПРОДВИНУТЫЙ УРОВЕНЬ ============ 
-// GET /cities/:id/details -  детальная информация с вложенными данными 
+
 app.get('/cities/:id/details', (req, res) => {
 	const id = parseInt(req.params.id);
 	const city = cities.find(c => c.id === id);
@@ -254,8 +248,7 @@ app.get('/cities/:id/details', (req, res) => {
 		return res.status(404).json({
 			error: 'Город не найден'
 		});
-	}
-	// Имитация вложенных данных 
+	} 
 	const districts = [
 		{
 			id: 1, name: 'Центральный', cityId: id
@@ -273,7 +266,7 @@ app.get('/cities/:id/details', (req, res) => {
 	});
 });
 
-// GET /countries/:country/cities/:cityId -  город в стране 
+
 app.get('/countries/:country/cities/:cityId', (req, res) => {
 	const { country, cityId
 	} = req.params;
@@ -298,7 +291,7 @@ app.get('/countries/:country/cities/:cityId', (req, res) => {
 	});
 });
 
-// ============ ОБРАБОТКА 404 ============ 
+// ОБРАБОТКА 404
 app.use((req, res) => {
 	res.status(404).json({
 		error: 'Маршрут не найден'
@@ -310,91 +303,6 @@ app.listen(port, () => {
 });
 ```
 
-### Скриншоты работы всех эндпоинтов
-
-<details>
-<summary>1. <code>GET /cities</code> - все города.</summary>
-
-![GET /cities](screenshots/basic/01-cities-all.png)
-
-</details>
-
-<details>
-<summary>2. <code>GET /cities/1</code> - город по id (Москва).</summary>
-
-![GET /cities/1](screenshots/basic/02-city-by-id.png)
-
-</details>
-
-<details>
-<summary>3. <code>GET /cities/999</code> - несуществующий город (404).</summary>
-
-![GET /cities/999 - 404](screenshots/basic/03-city-404.png)
-
-</details>
-
-<details>
-<summary>4. <code>GET /cities/abc</code> - нечисловой id (400).</summary>
-
-![GET /cities/abc - 400](screenshots/basic/04-city-400.png)
-
-</details>
-
-<details>
-<summary>5. <code>GET /cities/1/area</code> - площадь города.</summary>
-
-![GET /cities/1/area](screenshots/basic/05-city-area.png)
-
-</details>
-
-<details>
-<summary>6. <code>GET /countries/Россия/cities</code> - города страны.</summary>
-
-![GET /countries/Россия/cities](screenshots/basic/06-country-cities.png)
-
-</details>
-
-<details>
-<summary>7. <code>GET /cities?search=Москва</code> - поиск.</summary>
-
-![GET /cities?search](screenshots/basic/07-search.png)
-
-</details>
-
-<details>
-<summary>8. <code>GET /cities?sort=population&order=desc</code> - сортировка.</summary>
-
-![GET /cities?sort](screenshots/basic/08-sort.png)
-
-</details>
-
-<details>
-<summary>9. <code>GET /cities?page=1&limit=2</code> - пагинация.</summary>
-
-![GET /cities?page&limit](screenshots/basic/09-pagination.png)
-
-</details>
-
-<details>
-<summary>10. <code>GET /cities/1/details</code> - детали с вложенными данными.</summary>
-
-![GET /cities/1/details](screenshots/basic/10-details.png)
-
-</details>
-
-<details>
-<summary>11. <code>GET /countries/Россия/cities/1</code> - город в стране.</summary>
-
-![GET /countries/Россия/cities/1](screenshots/basic/11-country-city.png)
-
-</details>
-
-<details>
-<summary>12. <code>GET /anything-else</code> - несуществующий маршрут (404).</summary>
-
-![GET /anything-else - 404](screenshots/basic/12-route-404.png)
-
-</details>
 
 
 ## Выполнение индивидуального задания
@@ -409,161 +317,460 @@ app.listen(port, () => {
 
 ```js
 
+const express = require('express');
+const app = express();
+const port = 3000;
+
+
+app.use(express.json());
+
+app.use((req, res, next) => {
+	const startTime = Date.now();
+
+	res.on('finish', () => {
+		const duration = Date.now() - startTime;
+		console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${res.statusCode} ${duration}ms IP: ${req.ip}`);
+
+	});
+
+	next();
+})
+
+
+
+let recipes = [
+	{ id: 1, title: "Борщ", time: 90, difficulty: "medium" },
+	{ id: 2, title: "Омлет", time: 10, difficulty: "easy" },
+	{ id: 3, title: "Блины", time: 40, difficulty: "easy" },
+	{ id: 4, title: "Плов", time: 120, difficulty: "hard" },
+	{ id: 5, title: "Салат Цезарь", time: 25, difficulty: "easy" },
+	{ id: 6, title: "Лазанья", time: 100, difficulty: "hard" },
+	{ id: 7, title: "Сырники", time: 30, difficulty: "medium" }
+];
+
+
+let steps = [
+	{ id: 1, recipeId: 1, order: 1, text: "Сварить бульон из мяса" },
+	{ id: 2, recipeId: 1, order: 2, text: "Обжарить лук, морковь и свёклу" },
+	{ id: 3, recipeId: 1, order: 3, text: "Добавить овощи и капусту в бульон, варить 30 минут" },
+	{ id: 4, recipeId: 2, order: 1, text: "Взбить яйца с молоком и солью" },
+	{ id: 5, recipeId: 2, order: 2, text: "Вылить на разогретую сковороду и жарить под крышкой" },
+	{ id: 6, recipeId: 3, order: 1, text: "Смешать яйца, молоко, муку и сахар" },
+	{ id: 7, recipeId: 3, order: 2, text: "Жарить на сковороде с двух сторон" },
+	{ id: 8, recipeId: 4, order: 1, text: "Обжарить мясо с луком и морковью" },
+	{ id: 9, recipeId: 4, order: 2, text: "Добавить рис и воду, тушить до готовности" },
+	{ id: 10, recipeId: 5, order: 1, text: "Нарезать курицу и листья салата" },
+	{ id: 11, recipeId: 5, order: 2, text: "Заправить соусом и посыпать сыром" },
+	{ id: 12, recipeId: 6, order: 1, text: "Приготовить мясной соус и бешамель" },
+	{ id: 13, recipeId: 6, order: 2, text: "Собрать слои и запекать 40 минут" },
+	{ id: 14, recipeId: 7, order: 1, text: "Смешать творог, яйцо, сахар и муку" },
+	{ id: 15, recipeId: 7, order: 2, text: "Сформировать сырники и обжарить" }
+];
+
+
+app.get('/recipes', (req, res) => {
+
+	let result = [...recipes];
+
+	const search = req.query.search;
+	const filter = req.query.filter;
+	const sort = req.query.sort;
+	const order = req.query.order || 'asc';
+	const allowedSortFields = ['id', 'title', 'time'];
+	const page = parseInt(req.query.page) || 1;
+	const limit = parseInt(req.query.limit) || 10;
+
+	//& Поиск
+	if (search) {
+		result = result.filter(r => r.title.toLowerCase().includes(search.toLowerCase()));
+	}
+
+	//& Фильтрация
+	if (filter) {
+		const [field, value] = filter.split(':');
+		const allowedFilterFields = ['difficulty', 'time'];
+
+		if (!allowedFilterFields.includes(field)) {
+			return res.status(400).json({
+				error: `Фильтровать можно только по: ${allowedFilterFields.join(', ')}`
+			});
+		}
+
+		result = result.filter(r => String(r[field]) === value);
+	}
+	//& Сортировка
+	if (sort) {
+		if (!allowedSortFields.includes(sort)) {
+			return res.status(400).json({
+				error: `Сортировать можно только по: ${allowedSortFields.join(', ')}`
+			});
+		}
+
+		if (order !== 'asc' && order !== 'desc') {
+			return res.status(400).json({
+				error: 'order должен быть asc или desc'
+			});
+		}
+
+		result.sort((a, b) => {
+			if (a[sort] < b[sort]) {
+				return -1;
+			}
+			if (a[sort] > b[sort]) {
+				return 1;
+			}
+			return 0;
+		});
+
+		if (order === 'desc') {
+			result.reverse();
+		}
+	}
+
+	//& Палигнация 
+	if (page < 1) {
+		return res.status(400).json({ error: 'page должен быть >= 1' });
+	}
+
+	if (limit < 1 || limit > 100) {
+		return res.status(400).json({ error: 'limit должен быть от 1 до 100' });
+	}
+
+	const totalPages = Math.ceil(result.length / limit);
+	const start = (page - 1) * limit;
+	const items = result.slice(start, start + limit);
+
+	res.json({
+		count: result.length,
+		page,
+		limit,
+		totalPages,
+		items
+	});
+
+});
+
+
+//& Статистика
+app.get('/recipes/stats', (req, res) => {
+	const times = recipes.map(r => r.time);
+	const total = times.reduce((sum, t) => sum + t, 0);
+
+	res.json({
+		count: recipes.length,
+		averageTime: Math.round(total / recipes.length),
+		minTime: Math.min(...times),
+		maxTime: Math.max(...times)
+	});
+})
+
+
+app.get('/recipes/:id', (req, res) => {
+	const id = parseInt(req.params.id);
+
+	if (isNaN(id)) {
+		return res.status(400).json({
+			error: 'ID должен быть числом'
+
+		});
+	}
+
+	const recipe = recipes.find(r => r.id === id);
+	if (!recipe) {
+		return res.status(404).json({
+			error: 'Рецепт не найден'
+		});
+	}
+
+	res.json(recipe);
+});
+
+
+
+app.get('/recipes/:id/steps', (req, res) => {
+
+	const id = parseInt(req.params.id);
+	if (isNaN(id)) {
+		return res.status(400).json({
+			error: 'ID должен быть числом'
+		});
+	}
+
+	const recipe = recipes.find(r => r.id === id);
+	if (!recipe) {
+		return res.status(404).json({
+			error: 'Рецепт не найден'
+		});
+	}
+
+	const recipeSteps = steps.filter(s => s.recipeId === id)
+	res.json({
+		recipe: recipe.title,
+		steps: recipeSteps,
+		count: recipeSteps.length
+
+	});
+
+});
+
+
+app.get('/difficulties/:diff/recipes', (req, res) => {
+	const difficult = req.params.diff;
+	const filtered = recipes.filter(r => r.difficulty.toLowerCase() === difficult.toLowerCase());
+	res.json({
+		difficult,
+		count: filtered.length,
+		recipes: filtered
+
+	});
+
+});
+
+app.get('/recipes/:id/steps/:order', (req, res) => {
+	const id = parseInt(req.params.id);
+	const order = parseInt(req.params.order);
+
+	if (isNaN(id) || isNaN(order)) {
+		return res.status(400).json({
+			error: 'ID и Order должны быть числами'
+		});
+
+	}
+
+	const step = steps.find(s => s.recipeId === id && s.order === order);
+	if (!step) {
+		return res.status(404).json({
+			error: 'Этап не найден'
+		});
+	}
+
+	res.json(step);
+});
+
+
+app.get('/recipes/:id/steps/:order/next', (req, res) => {
+	const id = parseInt(req.params.id);
+	const order = parseInt(req.params.order);
+
+	if (isNaN(order) || isNaN(id)) {
+		return res.status(400).json({
+			error: 'ID и Order должны быть числами'
+		});
+	}
+
+	const currentStep = steps.find(s => s.recipeId === id && s.order === order);
+	if (!currentStep) {
+		return res.status(404).json({
+			error: "Текущий этап не найден"
+		});
+	}
+
+	const nextstep = steps.find(s => s.recipeId === id && s.order === order + 1);
+	if (!nextstep) {
+		return res.status(404).json({
+			error: "Следующий этап не найден"
+		});
+	}
+
+	res.json(nextstep);
+});
+
+
+//& Эндпоинт статистики / recipes / stats.
+app.get('recipes/stats', (req, res) => {
+
+	avgTime = recipes.reduce((sum, r) => sum + parseInt(r.avgTime), 0) / recipes.length;
+	res.json({ count: recipes.length, averageTime: avgTime.toFixed(1) });
+});
+
+
+//& Валидация сложности 
+
+app.get('/difficulties/abc/recipes', (req, res) => {
+	const allowedDifficulties = ['easy', 'medium', 'hard'];
+
+	if (!allowedDifficulties.includes(req.params.difficulty.toLowerCase())) {
+		return res.status(400).json({
+			error: `Сложность должна быть одной из: ${allowedDifficulties.join(', ')}`
+		});
+	}
+});
+
+
+
+// Маршрут / difficulties /: diff / recipes /: id(рецепт внутри категории).
+app.get('/difficulties/:diff/recipes/:id', (req, res) => {
+	const allowedDifficulties = ['easy', 'medium', 'hard'];
+	const diff = req.params.diff.toLowerCase();
+	const id = parseInt(req.params.id);
+
+	if (!allowedDifficulties.includes(diff)) {
+		return res.status(400).json({
+			error: `Сложность должна быть одной из: ${allowedDifficulties.join(', ')}`
+		});
+	}
+
+	if (isNaN(id)) {
+		return res.status(400).json({
+			error: 'Id должен быть числом'
+		});
+	}
+
+	const recipe = recipes.find(r => r.id === id && r.difficulty.toLowerCase() === diff);
+	if (!recipe) {
+		return res.status(404).json({
+			error: `Рецепт с id=${id} в категории "${diff}" не найден`
+		});
+	}
+
+	res.json(recipe);
+
+});
+
+
+
+app.use((req, res) => {
+	res.status(404).json({ error: 'Маршрут не найден' });
+});
+
+//& Глобальный обработчик ошибок 500.
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).json({ error: 'Внутренняя ошибка сервера' })
+})
+
+app.listen(port, () => {
+	console.log(`Сервер запущен на http://localhost:${port}`);
+});
+
 ```
 
 ### Скриншоты работы всех эндпоинтов
 
-**Базовый функционал:**
+**Рецепты и этапы:**
 
 <details>
-<summary>1. <code>GET /items</code> - список всех рецептов.</summary>
+<summary>1. <code>GET /recipes</code> - список всех рецептов.</summary>
 
-![GET /items](screenshots/advanced/01-get-all.png)
+![GET /recipes - список рецептов](screenshots/01-all-recipes.png)
 
 </details>
 
 <details>
-<summary>2. <code>GET /items/2</code> - один рецепт по id.</summary>
+<summary>2. <code>GET /recipes/1</code> - один рецепт по id.</summary>
 
-![GET /items/2](screenshots/advanced/02-get-by-id.png)
-
-</details>
-
-<details>
-<summary>3. <code>GET /items/999</code> - 404 при отсутствии элемента.</summary>
-
-![GET /items/999 - 404](screenshots/advanced/03-get-404.png)
+![GET /recipes/1 - рецепт по id](screenshots/02-recipe-by-id.png)
 
 </details>
 
 <details>
-<summary>4. <code>GET /items/abc</code> - 400 при нечисловом id.</summary>
+<summary>3. <code>GET /recipes/1/steps</code> - все этапы рецепта.</summary>
 
-![GET /items/abc - 400](screenshots/advanced/04-get-400.png)
-
-</details>
-
-<details>
-<summary>5. <code>GET /items/1/steps</code> - шаги рецепта (вложенный ресурс).</summary>
-
-![GET /items/1/steps](screenshots/advanced/05-steps.png)
+![GET /recipes/1/steps - этапы рецепта](screenshots/03-recipe-steps.png)
 
 </details>
 
 <details>
-<summary>6. <code>GET /difficulties/Лёгкая/items</code> - рецепты категории (сложности).</summary>
+<summary>4. <code>GET /recipes/1/steps/1</code> - конкретный этап рецепта.</summary>
 
-![GET /difficulties/Лёгкая/items](screenshots/advanced/06-difficulty-items.png)
-
-</details>
-
-**Query-параметры и валидация:**
-
-<details>
-<summary>7. <code>GET /items?search=паста</code> - поиск по названию.</summary>
-
-![GET /items?search](screenshots/advanced/07-search.png)
+![GET /recipes/1/steps/1 - один этап](screenshots/04-recipe-step.png)
 
 </details>
 
 <details>
-<summary>8. <code>GET /items?sort=title&order=asc</code> - сортировка.</summary>
+<summary>5. <code>GET /recipes/1/steps/1/next</code> - следующий этап после указанного.</summary>
 
-![GET /items?sort](screenshots/advanced/08-sort.png)
-
-</details>
-
-<details>
-<summary>9. <code>GET /items?sort=abc</code> - 400 (поле вне белого списка).</summary>
-
-![GET /items?sort=abc - 400](screenshots/advanced/09-sort-400.png)
+![GET /recipes/1/steps/1/next - следующий этап](screenshots/05-next-step.png)
 
 </details>
 
 <details>
-<summary>10. <code>GET /items?sort=time&order=up</code> - 400 (неверный order).</summary>
+<summary>6. <code>GET /recipes/stats</code> - статистика (количество, среднее, min и max время).</summary>
 
-![GET /items?order - 400](screenshots/advanced/10-order-400.png)
+![GET /recipes/stats - статистика](screenshots/06-stats.png)
+
+</details>
+
+**Сложности:**
+
+<details>
+<summary>7. <code>GET /difficulties/easy/recipes</code> - рецепты категории сложности.</summary>
+
+![GET /difficulties/easy/recipes - рецепты по сложности](screenshots/07-recipes-by-difficulty.png)
 
 </details>
 
 <details>
-<summary>11. <code>GET /items?page=1&limit=2</code> - пагинация.</summary>
+<summary>8. <code>GET /difficulties/easy/recipes/2</code> - рецепт внутри категории сложности.</summary>
 
-![GET /items?page&limit](screenshots/advanced/11-pagination.png)
+![GET /difficulties/easy/recipes/2 - рецепт в категории](screenshots/08-recipe-in-difficulty.png)
+
+</details>
+
+**Поиск, фильтрация, сортировка, пагинация:**
+
+<details>![alt text](image.png)
+<summary>9. <code>GET /recipes?search=борщ</code> - поиск по названию.</summary>
+
+![GET /recipes?search - поиск](screenshots/09-search.png)
 
 </details>
 
 <details>
-<summary>12. <code>GET /items?page=0</code> и <code>GET /items?limit=1000</code> - 400 (неверные page/limit).</summary>
+<summary>10. <code>GET /recipes?sort=time</code> - сортировка по времени по возрастанию.</summary>
 
-![GET /items?page=0 - 400](screenshots/advanced/12-page-400.png)
-![GET /items?limit=1000 - 400](screenshots/advanced/13-limit-400.png)
-
-</details>
-
-<details>
-<summary>13. <code>GET /items?filter=difficulty:Лёгкая</code> - фильтрация по полю.</summary>
-
-![GET /items?filter](screenshots/advanced/14-filter.png)
-
-</details>
-
-**Продвинутый уровень:**
-
-<details>
-<summary>14. <code>GET /chefs/1/items</code> - рецепты шефа.</summary>
-
-![GET /chefs/1/items](screenshots/advanced/15-chef-items.png)
+![GET /recipes?sort=time - сортировка](screenshots/10-sort-time.png)
 
 </details>
 
 <details>
-<summary>15. <code>GET /chefs/1/items/2</code> - конкретный рецепт шефа.</summary>
+<summary>11. <code>GET /recipes?sort=time&order=desc</code> - сортировка по времени по убыванию.</summary>
 
-![GET /chefs/1/items/2](screenshots/advanced/16-chef-item.png)
-
-</details>
-
-<details>
-<summary>16. <code>GET /chefs/1/items/999</code> - 404 (рецепт не найден у шефа).</summary>
-
-![GET /chefs/1/items/999 - 404](screenshots/advanced/17-chef-item-404.png)
+![GET /recipes?sort=time&order=desc - сортировка по убыванию](screenshots/![alt text](image.png).png)
 
 </details>
 
 <details>
-<summary>17. <code>GET /chefs/1/items/2/steps/1</code> - маршрут с несколькими параметрами пути.</summary>
+<summary>12. <code>GET /recipes?page=1&limit=3</code> - пагинация.</summary>
 
-![GET /chefs/1/items/2/steps/1](screenshots/advanced/18-multi-params.png)
+![GET /recipes?page&limit - пагинация](screenshots/12-pagination.png)
+
+</details>
+![alt text](image.png)
+<details>
+<summary>13. <code>GET /recipes?filter=difficulty:easy</code> - фильтрация по полю.</summary>
+
+![GET /recipes?filter - фильтрация](screenshots/13-filter.png)
 
 </details>
 
 <details>
-<summary>18. <code>GET /items/stats</code> - статистика (количество, среднее, min/max время).</summary>
+<summary>14. <code>GET /recipes?search=с&sort=time&order=asc&page=1&limit=2</code> - комбинация поиска, сортировки и пагинации.</summary>
 
-![GET /items/stats](screenshots/advanced/19-stats.png)
+![GET /recipes - комбинированный запрос](screenshots/14-combined.png)
+
+</details>
+
+**Обработка ошибок:**
+
+<details>
+<summary>15. <code>GET /recipes/999</code> - 404 при отсутствии рецепта.</summary>
+
+![GET /recipes/999 - 404](screenshots/15-recipe-404.png)
 
 </details>
 
 <details>
-<summary>19. <code>GET /anything-else</code> - wildcard-маршрут, 404.</summary>
+<summary>16. <code>GET /recipes/abc</code> - 400 при нечисловом id.</summary>
 
-![GET /anything-else - 404](screenshots/advanced/20-wildcard-404.png)
-
-</details>
-
-<details>
-<summary>20. Вызов ошибки на сервере - глобальный обработчик, 500.</summary>
-
-![error 500](screenshots/advanced/21-error-500.png)
+![GET /recipes/abc - 400](screenshots/16-recipe-400.png)
 
 </details>
 
 <details>
-<summary>21. Консоль сервера - логирование запросов (метод, URL, время, IP).</summary>
+<summary>17. <code>GET /anything</code> - 404 при неизвестном маршруте.</summary>
 
-![console log](screenshots/advanced/22-console-log.png)
+![GET /anything - 404](screenshots/17-unknown-route.png)
 
 </details>
 
