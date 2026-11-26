@@ -279,7 +279,7 @@ app.get('/difficulties/abc/recipes', (req, res) => {
 
 
 
-// Маршрут / difficulties /: diff / recipes /: id(рецепт внутри категории).
+
 app.get('/difficulties/:diff/recipes/:id', (req, res) => {
 	const allowedDifficulties = ['easy', 'medium', 'hard'];
 	const diff = req.params.diff.toLowerCase();
